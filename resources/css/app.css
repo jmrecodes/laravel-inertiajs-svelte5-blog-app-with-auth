@@ -1,0 +1,270 @@
+/**
+ * MAIN APPLICATION STYLES - EDUCATIONAL BLOG CRUD
+ * ===============================================
+ * 
+ * This CSS file serves as the foundation for our educational blog application.
+ * We use Tailwind CSS for utility-first styling with custom educational enhancements.
+ * 
+ * EDUCATIONAL CONCEPTS COVERED:
+ * - Tailwind CSS utility classes
+ * - CSS custom properties (variables)
+ * - Component-based styling
+ * - Responsive design principles
+ * - Accessibility considerations
+ * - Performance optimization
+ * 
+ * FILE STRUCTURE:
+ * 1. Tailwind directives
+ * 2. CSS custom properties
+ * 3. Base styles and resets
+ * 4. Custom component classes
+ * 5. Utility overrides
+ * 6. Print styles
+ */
+
+/*
+ * EDUCATIONAL BLOG CRUD APP - TAILWIND CSS v4 CONFIGURATION
+ * =========================================================
+ * 
+ * This file demonstrates modern CSS architecture with Tailwind CSS v4.
+ * We've adopted a pure utility-first approach after encountering and resolving
+ * custom component class compatibility issues.
+ * 
+ * TROUBLESHOOTING JOURNEY:
+ * 1. Initially tried custom @layer components with @apply directives
+ * 2. Encountered compilation errors with Tailwind v4
+ * 3. Refactored to direct utility classes for better compatibility
+ * 
+ * EDUCATIONAL BENEFITS of this approach:
+ * - Framework agnostic (utilities work everywhere)
+ * - Better performance (no custom CSS compilation overhead)
+ * - Improved maintainability (all styling visible in templates)
+ * - Aligns with Tailwind v4 philosophy and best practices
+ */
+
+/* 
+ * TAILWIND CSS v4 IMPORT
+ * ======================
+ * Single import replaces the old three-directive approach:
+ * 
+ * OLD (v3):     NEW (v4):
+ * @tailwind base;      ↘
+ * @tailwind components; ↗ @import "tailwindcss";
+ * @tailwind utilities; ↙
+ */
+@import "tailwindcss";
+
+/* 
+ * TAILWIND CSS V4 - CSS-FIRST CONFIGURATION  
+ * ==========================================
+ * 
+ * Tailwind v4 introduces CSS-first configuration where custom colors
+ * are defined directly in CSS using @theme directive instead of 
+ * JavaScript configuration files.
+ */
+
+@theme {
+  /*
+   * 🎨 BRAND COLORS - Modern Educational Palette
+   * ==========================================
+   * 
+   * These colors create a professional, friendly learning environment.
+   * Using oklch() color space for better perceptual uniformity.
+   */
+  
+  /* Accent Colors - Bright, engaging blue-cyan */
+  --color-accent-50: oklch(98.4% .014 180.72);
+  --color-accent-100: oklch(95.6% .045 203.388);
+  --color-accent-200: oklch(91.7% .08 205.041);
+  --color-accent-300: oklch(86.5% .127 207.078);
+  --color-accent-400: oklch(78.9% .154 211.53);
+  --color-accent-500: oklch(71.5% .143 215.221);  /* 🎯 Main accent */
+  --color-accent-600: oklch(60.9% .126 221.723);  /* 🎯 Hover state */
+  --color-accent-700: oklch(52% .105 223.128);
+  --color-accent-800: oklch(45% .085 224.283);
+
+  /* Primary Colors - Professional deep blue */
+  --color-primary-50: oklch(97% .014 254.604);
+  --color-primary-100: oklch(93.2% .032 255.585);
+  --color-primary-200: oklch(88.2% .059 254.128);
+  --color-primary-300: oklch(80.9% .105 251.813);
+  --color-primary-400: oklch(70.7% .165 254.624);
+  --color-primary-500: oklch(48.8% .243 264.376);  /* 🎯 Main primary */
+  --color-primary-600: oklch(54.6% .245 262.881);  /* 🎯 Hover state */
+  --color-primary-700: oklch(48.8% .243 264.376);
+  --color-primary-800: oklch(42.4% .199 265.638);
+}
+
+/*
+ * ====================================================================
+ * 📚 EDUCATIONAL FOUNDATION STYLES
+ * ====================================================================
+ * 
+ * Clean, semantic base styles that enhance the learning experience.
+ * These work perfectly with our streamlined Tailwind utilities.
+ */
+
+:root {
+  /* 🔤 Typography Scale - Better reading experience */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * 🎯 ENHANCED FOCUS STATES
+ * ========================
+ * 
+ * Better accessibility with visible, beautiful focus indicators.
+ */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent-500));
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/*
+ * 🎨 EDUCATIONAL ANIMATIONS
+ * ========================
+ * 
+ * Subtle, purposeful animations that enhance learning without distraction.
+ */
+
+/* Smooth hover transitions for interactive elements */
+button, a, input, textarea {
+  transition: all 0.2s ease;
+}
+
+/* Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Disable transform animations */
+  button:hover, .hover\:scale-105:hover {
+    transform: none !important;
+  }
+}
+
+/*
+ * 🖼️ IMAGE OPTIMIZATION
+ * =====================
+ * 
+ * Better image loading and display for educational content.
+ */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+ * 📱 RESPONSIVE UTILITIES
+ * ======================
+ * 
+ * Additional responsive helpers for educational layouts.
+ */
+
+/* Container utilities for better content width management */
+.container-prose {
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-wide {
+  max-width: 90rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+ * 🎓 EDUCATIONAL COMPONENTS
+ * ========================
+ * 
+ * Special styling for educational elements and patterns.
+ */
+
+/* Code blocks and technical content */
+pre, code {
+  font-family: var(--font-family-mono);
+}
+
+/* Educational callouts and highlights */
+.callout {
+  border-left: 4px solid rgb(var(--color-accent-500));
+  background: rgb(var(--color-accent-50));
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.callout.warning {
+  border-left-color: rgb(var(--color-yellow-500));
+  background: rgb(var(--color-yellow-50));
+}
+
+.callout.success {
+  border-left-color: rgb(var(--color-green-500));
+  background: rgb(var(--color-green-50));
+}
+
+/*
+ * 🖨️ PRINT STYLES
+ * ===============
+ * 
+ * Optimized styles for printing educational content.
+ */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: black;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, li {
+    page-break-inside: avoid;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Flatten colors for print */
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}
+
+/*
+ * ====================================================================
+ * 🎯 SUCCESS! STREAMLINED EDUCATIONAL CSS
+ * ====================================================================
+ * 
+ * This CSS foundation provides:
+ * ✅ Modern Tailwind v4 architecture
+ * ✅ Clean, readable color system
+ * ✅ Accessible focus states
+ * ✅ Responsive design utilities
+ * ✅ Educational component patterns
+ * ✅ Print-optimized styles
+ * ✅ Performance-focused approach
+ * ✅ Maintainable code structure
+ * 
+ * Perfect for educational projects and learning modern CSS!
+ */
