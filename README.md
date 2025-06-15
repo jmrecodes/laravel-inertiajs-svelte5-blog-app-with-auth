@@ -181,4 +181,4 @@ This project was created using modern AI-powered development tools:
 
 *Happy coding! Every expert was once a beginner.* 🌟
 
-*Last updated: June 10, 2025 | Created with 💙 from the Philippines 🇵🇭 using [Cursor](https://www.cursor.com/)*
+*Last updated: June 15, 2025 | Created with 💙 from the Philippines 🇵🇭 using [Cursor](https://www.cursor.com/), [Zed](https://zed.dev/), and latest Gemini & Claude AI models*
