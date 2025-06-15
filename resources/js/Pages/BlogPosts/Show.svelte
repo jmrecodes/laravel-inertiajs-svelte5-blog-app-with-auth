@@ -66,12 +66,43 @@
    * - `errors`: Validation errors (though less common on a show page).
    */
   let { 
-    post,           
+    post,      
+    search = '',      
     canEdit = false, 
     auth = {},      
     flash = {},     
     errors = {}     
   } = $props()
+
+  /*
+   * REACTIVE STATE - SEARCH FUNCTIONALITY ($STATE)
+   * =============================================
+   * 
+   * `$state` creates reactive variables that trigger UI updates when they change.
+   * 🎓 LEARN: How to manage local component state in Svelte 5.
+   */
+  let searchQuery = $state(search) // Binds to the search input field
+  let searchTimeout = null           // Used for debouncing the search input
+
+  function handleSearch(event) {
+    searchQuery = event.target.value // Update the reactive search query state
+    
+    // Clear any previous debounce timeout to reset the timer
+    if (searchTimeout) {
+      clearTimeout(searchTimeout)
+    }
+    
+    // Set a new timeout: send request after 300ms of no further typing
+    searchTimeout = setTimeout(() => {
+      router.get('/posts', 
+        searchQuery ? { search: searchQuery } : {}, // Send search term if not empty, otherwise empty object
+        { 
+          preserveState: true,   // Keep the current component instance and state (e.g., form input)
+          preserveScroll: true // Maintain the user's scroll position after the update
+        }
+      )
+    }, 300) // 300 milliseconds debounce time
+  }
   
   /*
    * UTILITY FUNCTIONS - DATA TRANSFORMATION AND BROWSER APIs
@@ -237,6 +268,62 @@
     
     This header provides consistent navigation options and displays the authenticated user's status.
    -->
+
+   <div class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Blog Header Text -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          jmrecodes Educational Blog
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Discover tutorials and insights about modern web development.
+          Learn Svelte 5, Laravel, Inertia.js, and more.
+        </p>
+      </div>
+      
+      <!-- Search Bar Input -->
+      <div class="max-w-md mx-auto">
+        <label for="search" class="sr-only">Search blog posts</label> <!-- sr-only hides label visually but keeps for screen readers -->
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <!-- Search Icon SVG -->
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="search"
+            bind:value={searchQuery}
+            oninput={handleSearch}
+            placeholder="Search posts..."
+            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg
+                   focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500
+                   placeholder-gray-500 text-gray-900 sm:text-sm"
+          />
+        </div>
+        
+        <!-- Search Results Information (Conditional Display) -->
+        {#if search} <!-- Only show if there's an active search query -->
+          <p class="mt-2 text-sm text-gray-600 text-center">
+            {posts.total} {posts.total === 1 ? 'result' : 'results'} for "{search}"
+            <button 
+              type="button"
+              onclick={() => {
+                searchQuery = '' // Clear client-side search input
+                router.get('/posts') // Perform a new Inertia visit without search parameter
+              }}
+              class="ml-2 text-cyan-600 hover:text-cyan-700 underline"
+            >
+              Clear search
+            </button>
+          </p>
+        {/if}
+      </div>
+    </div>
+  </div>
+   
   <div class="bg-white shadow-sm border-b border-gray-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <nav class="flex items-center justify-between">
@@ -246,7 +333,7 @@
             href="/posts" 
             class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary-700 transition-colors duration-200"
           >
-            ← Back to posts
+            ← Back to All Posts
           </Link>
           {#if auth?.user} <!-- Conditionally display dashboard and my posts links if user is authenticated -->
             <!-- Link to Dashboard -->
@@ -263,6 +350,7 @@
           {/if}
         </div>
         
+        {#if auth?.user}
         <div class="flex items-center space-x-3">
           <span class="text-sm text-gray-600">Welcome, {auth?.user?.name || 'User'}</span>
 
@@ -287,6 +375,7 @@
             Write Post
           </Link>
         </div>
+        {/if}
       </nav>
     </div>
   </div>
@@ -462,7 +551,7 @@
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        View all posts
+        Back to All Posts
       </Link>
       
       {#if canEdit} <!-- Only show edit button if current user is authorized to edit this post -->
