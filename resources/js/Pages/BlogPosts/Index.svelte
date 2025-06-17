@@ -194,45 +194,6 @@
 -->
 <div class="min-h-screen bg-gray-50">
   <!-- 
-    NAVIGATION HEADER (CONDITIONAL FOR AUTHENTICATED USERS)
-    =======================================================
-    
-    This header provides quick links for logged-in users to navigate to their dashboard
-    and post management pages. It is only shown if `auth?.user` exists (i.e., user is logged in).
-    
-    🎓 LEARN: How to conditionally render UI elements based on authentication status.
-   -->
-  {#if auth?.user}
-    <div class="bg-white border-b border-gray-200">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <nav class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-            <!-- Link to Dashboard -->
-            <Link href="/dashboard" class="text-sm text-gray-600 hover:text-blue-700 transition-colors duration-200">
-              ← Dashboard
-            </Link>
-            <span class="text-gray-400">|</span>
-            <!-- Link to My Posts (Manage BlogPosts) -->
-            <Link href="/manage-posts" class="text-sm text-gray-600 hover:text-blue-700 transition-colors duration-200">
-              My Posts
-            </Link>
-          </div>
-          <div class="flex items-center space-x-3">
-            <span class="text-sm text-gray-600">Welcome, {auth?.user?.name || 'User'}</span>
-            <!-- Button to Write New Post -->
-            <Link href="/posts/create" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-cyan-500 hover:bg-cyan-600 rounded-md transition-colors duration-200">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              Write Post
-            </Link>
-          </div>
-        </nav>
-      </div>
-    </div>
-  {/if}
-
-  <!-- 
     HERO SECTION WITH BLOG TITLE AND SEARCH BAR
     ===========================================
     
@@ -293,6 +254,45 @@
       </div>
     </div>
   </div>
+
+  <!-- 
+    NAVIGATION HEADER (CONDITIONAL FOR AUTHENTICATED USERS)
+    =======================================================
+    
+    This header provides quick links for logged-in users to navigate to their dashboard
+    and post management pages. It is only shown if `auth?.user` exists (i.e., user is logged in).
+    
+    🎓 LEARN: How to conditionally render UI elements based on authentication status.
+   -->
+   {#if auth?.user}
+   <div class="bg-white border-b border-gray-200">
+     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+       <nav class="flex items-center justify-between">
+         <div class="flex items-center space-x-4">
+           <!-- Link to Dashboard -->
+           <Link href="/dashboard" class="text-sm text-gray-600 hover:text-blue-700 transition-colors duration-200">
+             ← Dashboard
+           </Link>
+           <span class="text-gray-400">|</span>
+           <!-- Link to My Posts (Manage BlogPosts) -->
+           <Link href="/manage-posts" class="text-sm text-gray-600 hover:text-blue-700 transition-colors duration-200">
+             My Posts →
+           </Link>
+         </div>
+         <div class="flex items-center space-x-3">
+           <span class="text-sm text-gray-600">Welcome, {auth?.user?.name || 'User'}</span>
+           <!-- Button to Write New Post -->
+           <Link href="/posts/create" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-cyan-500 hover:bg-cyan-600 rounded-md transition-colors duration-200">
+             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+             </svg>
+             Write Post
+           </Link>
+        </div>
+      </nav>
+    </div>
+  </div>
+ {/if}
   
   <!-- 
     BLOG POSTS LISTING AREA

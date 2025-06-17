@@ -323,10 +323,10 @@
       </div>
     </div>
   </div>
-   
-  <div class="bg-white shadow-sm border-b border-gray-200">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <nav class="flex items-center justify-between">
+  
+  <div class="bg-white border-b border-gray-200">
+     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+       <nav class="flex items-center justify-between">
         <div class="flex items-center space-x-4">
           <!-- Back Navigation to Blog Posts List -->
           <Link 
